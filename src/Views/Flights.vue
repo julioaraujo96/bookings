@@ -3,8 +3,9 @@
         <h1 class="text-2xl text-center font-medium text-gray-700">Find flights and plan your next adventure</h1>
         <h2 class="text-base text-center my-4 text-gray-400">Book & Manage your trip on the go hassle free</h2>
 
-        <div class="bg-purple-100 rounded w-[50%] mx-auto my-12 p-6 flex h-fit flex-col gap-4">
+        <div class="bg-purple-100 rounded w-full mx-auto my-12 p-6 flex h-fit flex-col gap-4">
             <div class="flex justify-start items-center space-x-4 ">
+
 
                 <CityComboBox 
                     :options="origins" 
@@ -30,6 +31,8 @@
                     />
                 </div>
 
+                <PeopleSelect :open="selectOpen"/>
+
             </div>
         </div>
     </section>
@@ -40,6 +43,7 @@
 import SwitchIcon from '../components/UI/Icons/SwitchIcon.vue';
 import CityComboBox from '../components/CityComboBox.vue';
 import { flightsDB } from '../flightData';
+import PeopleSelect from '../components/PeopleSelect.vue';
 
 export default {
     data() {
@@ -57,7 +61,7 @@ export default {
                 date: 'YYYY-MM-DD',
                 month: 'MMM'
             },
-
+            selectOpen: false,
         };
     },
     mounted() {
@@ -136,9 +140,10 @@ export default {
 
     components:
     {
-        Navigation,
-        SwitchIcon,
-        CityComboBox,
-    }
+    Navigation,
+    SwitchIcon,
+    CityComboBox,
+    PeopleSelect
+}
 };
 </script>
