@@ -6,14 +6,18 @@
         <div class="bg-purple-100 rounded w-[50%] h-20 mx-auto my-12 flex justify-start items-center px-8">
             <CityComboBox 
                 :options="origins" 
-                @onCitySelected="setOrigin" 
+                @onCitySelected="setOrigin"
+                ref="originComboBox" 
             />
 
-            <SwitchIcon />
+            <SwitchIcon 
+                @click="swapSelections" 
+            />
 
             <CityComboBox 
                 :options="destinations" 
                 @onCitySelected="setDestination" 
+                ref="destinationComboBox" 
             />
         </div>
     </section>
@@ -32,8 +36,8 @@ export default {
             query: '',
             cities: [],
             options: [],
-            origin: '',
-            destination: '',
+            origin: null,
+            destination: null,
         };
     },
     mounted() {
@@ -46,24 +50,24 @@ export default {
         });
     },
 
-    computed:{
-        origins(){
-            const destination = this.destination; 
+    computed: {
+        origins() {
+            const destination = this.destination;
 
-            if(!destination){
+            if (!destination) {
                 return this.options;
             }
 
-            return this.options.filter( option => option !== destination);
-        }, 
-        destinations(){
-            const origin = this.origin; 
+            return this.options.filter(option => option !== destination);
+        },
+        destinations() {
+            const origin = this.origin;
 
-            if(!origin){
+            if (!origin) {
                 return this.options;
             }
-            
-            return this.options.filter( option => option !== origin);
+
+            return this.options.filter(option => option !== origin);
         }
     },
 
@@ -86,6 +90,19 @@ export default {
         },
         setDestination(destination) {
             this.destination = destination;
+        },
+        swapSelections() {
+            if(!this.origin || !this.destination){
+                return; 
+            }
+            
+            [this.origin, this.destination] = [this.destination, this.origin];
+
+
+            this.$nextTick(() => {
+                this.$refs.originComboBox.setSelectedCity(this.origin);
+                this.$refs.destinationComboBox.setSelectedCity(this.destination);
+            });
         }
     },
 

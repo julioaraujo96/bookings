@@ -65,7 +65,6 @@ export default {
         filteredOptions() {
             const options = this.options;
             const query = this.query?.toLowerCase();
-            console.log(options, query);
             if (query === '') {
                 return options;
             }
@@ -79,10 +78,18 @@ export default {
             if(!this.selected){
                 return;
             }
-
             this.$emit('onCitySelected', this.selected)
-        }
+        },
     },  
+    methods:{
+        setSelectedCity(city){
+            if(!city){
+                return;
+            }
+
+            this.selected = city;
+        }
+    },
     components: {
         Combobox,
         ComboboxInput,
