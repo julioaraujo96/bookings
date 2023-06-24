@@ -1,6 +1,6 @@
 <template>
-    <Combobox v-model="selected">
-        <div class="relative mt-1">
+    <Combobox v-model="selected" class="combobox">
+        <div class="relative">
             <div
                 class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <ComboboxInput class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"

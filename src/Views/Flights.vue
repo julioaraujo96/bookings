@@ -3,22 +3,34 @@
         <h1 class="text-2xl text-center font-medium text-gray-700">Find flights and plan your next adventure</h1>
         <h2 class="text-base text-center my-4 text-gray-400">Book & Manage your trip on the go hassle free</h2>
 
-        <div class="bg-purple-100 rounded w-[50%] h-20 mx-auto my-12 flex justify-start items-center px-8">
-            <CityComboBox 
-                :options="origins" 
-                @onCitySelected="setOrigin"
-                ref="originComboBox" 
-            />
+        <div class="bg-purple-100 rounded w-[50%] mx-auto my-12 p-6 flex h-fit flex-col gap-4">
+            <div class="flex justify-start items-center space-x-4 ">
 
-            <SwitchIcon 
-                @click="swapSelections" 
-            />
+                <CityComboBox 
+                    :options="origins" 
+                    @onCitySelected="setOrigin" 
+                    ref="originComboBox" 
+                />
 
-            <CityComboBox 
-                :options="destinations" 
-                @onCitySelected="setDestination" 
-                ref="destinationComboBox" 
-            />
+                <SwitchIcon 
+                    @click="swapSelections" 
+                />
+
+                <CityComboBox 
+                    :options="destinations" 
+                    @onCitySelected="setDestination" 
+                    ref="destinationComboBox" 
+                />
+
+                <div class="w-[50%]">
+                    <vue-tailwind-datepicker 
+                        input-classes="border-none rounded shadow-sm"
+                        :formatter="formatter" 
+                        v-model="dateValue" 
+                    />
+                </div>
+
+            </div>
         </div>
     </section>
 </template>
@@ -38,6 +50,14 @@ export default {
             options: [],
             origin: null,
             destination: null,
+            departureTime: '',
+            arrivalTime: '',
+            dateValue: [],
+            formatter: {
+                date: 'YYYY-MM-DD',
+                month: 'MMM'
+            },
+
         };
     },
     mounted() {
@@ -71,6 +91,14 @@ export default {
         }
     },
 
+    watch:{
+        dateValue(newDate){
+            if(newDate){
+                [this.departureTime, this.arrivalTime] = newDate;
+            }
+        }
+    }, 
+
     methods: {
         createCitySet() {
             const citySet = new Set();
@@ -92,10 +120,10 @@ export default {
             this.destination = destination;
         },
         swapSelections() {
-            if(!this.origin || !this.destination){
-                return; 
+            if (!this.origin || !this.destination) {
+                return;
             }
-            
+
             [this.origin, this.destination] = [this.destination, this.origin];
 
 

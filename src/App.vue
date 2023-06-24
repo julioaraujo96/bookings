@@ -22,9 +22,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   html {
     background-color: #f5f6fa;
     font-family: Roboto, sans-serif;
+  }
+
+  .combobox > div > input{
+    min-height: 40px;
   }
 </style>
